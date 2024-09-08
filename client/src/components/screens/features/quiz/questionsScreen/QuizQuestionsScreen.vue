@@ -1,8 +1,11 @@
 <template>
   <div>
-    <BackgroundWave />
-    <section v-if="questions.length > 0">
-      <div class="d-flex">
+    <Navigator :items="[
+      { text: name, to: `/feature/quiz` },
+      { text: 'Quiz', to: '' }
+    ]" />
+    <main v-if="questions.length > 0" class="main-content">
+      <div class="question-text d-flex">
         <span class="question-number">{{ currentIndex + 1 }}</span>
         <p>{{ questions[currentIndex].question_text }}</p>
       </div>
@@ -13,11 +16,13 @@
           <span>{{ answer.id }}</span> {{ answer.text }}
         </button>
       </div>
-    </section>
+    </main>
     <footer class="d-flex f-end">
-      <BaseButton v-if="currentIndex !== 0" :theme="BUTTON_THEMES.SECONDARY" @click="prevQuestion" class="no-fill">Back
+      <BaseButton v-if="currentIndex !== 0" :theme="BUTTON_THEMES.SECONDARY" @click="prevQuestion" class="no-fill mr-1">
+        Back
       </BaseButton>
-      <BaseButton :theme="BUTTON_THEMES.SECONDARY" @click="nextQuestion">{{ currentIndex === questions.length - 1 ?
+      <BaseButton :theme="BUTTON_THEMES.SECONDARY" :disabled="!isAnswered" @click="nextQuestion">{{ currentIndex ===
+        questions.length - 1 ?
         "Submit" : "Next" }}</BaseButton>
     </footer>
   </div>
@@ -28,13 +33,17 @@
 import { THEMES as BUTTON_THEMES } from '@/components/base/button/config.js'
 
 // COMPONENTS
-import BackgroundWave from '@/components/base/backgrounds/wave/BackgroundWave.vue'
+import Navigator from '@/components/compositions/navigator/Navigator.vue'
 import BaseButton from '@/components/base/button/BaseButton.vue';
 
 export default {
   name: 'QuizQuestionsScreen',
-  components: { BaseButton, BackgroundWave },
+  components: { BaseButton, Navigator },
   props: {
+    name: {
+      type: String,
+      required: true
+    },
     questions: {
       type: Array,
       required: true
@@ -53,6 +62,12 @@ export default {
       BUTTON_THEMES
     }
   },
+  computed: {
+    isAnswered() {
+      // Check if the current question has an answer
+      return this.userAnswers.hasOwnProperty(this.questions[this.currentIndex].id);
+    }
+  },
   methods: {
     nextQuestion() {
       this.$emit('next');
@@ -68,8 +83,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section {
-  min-width: 400px;
+.main-content {
+  margin-block: 100px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1.2rem;
+  min-width: 450px;
+  align-items: flex-start;
 }
 
 span.question-number {
@@ -82,6 +104,7 @@ span.question-number {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
 .answer {
@@ -115,14 +138,14 @@ span.question-number {
   border-radius: 50%;
 }
 
-// button.no-fill {
-//   background-color: transparent;
-//   color: #008080;
-//   border: 4px solid #008080;
-//   box-sizing: border-box;
-//   -moz-box-sizing: border-box;
-//   -webkit-box-sizing: border-box;
-// }
+button.no-fill {
+  background-color: transparent;
+  color: #008080;
+  border: 4px solid #008080;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
 
 footer {
   position: fixed;
@@ -139,5 +162,9 @@ footer {
 
 .f-end {
   justify-content: flex-end;
+}
+
+.mr-1 {
+  margin-right: 1rem;
 }
 </style>

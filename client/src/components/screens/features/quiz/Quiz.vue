@@ -3,10 +3,10 @@
     <div v-if="quiz">
       <QuizStartScreen v-if="quizState === QUIZ_STATES.START" :name="quiz.name" :questionsLength="quiz.questions.length"
         @start="start"></QuizStartScreen>
-      <QuizQuestionsScreen v-if="quizState === QUIZ_STATES.QUESTIONS" :questions="quiz.questions"
+      <QuizQuestionsScreen v-if="quizState === QUIZ_STATES.QUESTIONS" :name="quiz.name" :questions="quiz.questions"
         :currentIndex="currentQuestionIndex" :userAnswers="userAnswers" @next="nextQuestion" @back="prevQuestion" @update="updateUsersAnswer">
       </QuizQuestionsScreen>
-      <QuizResultScreen v-if="quizState === QUIZ_STATES.RESULT" :quizResults="quizResults"></QuizResultScreen>
+      <QuizResultScreen v-if="quizState === QUIZ_STATES.RESULT" :name="quiz.name" :quizResults="quizResults"></QuizResultScreen>
     </div>
     <div v-else-if="errors">
       <span>{{ errors }}</span>
