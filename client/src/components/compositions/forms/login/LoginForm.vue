@@ -31,7 +31,7 @@ export default {
         password: this.password
       })
       this.$emit('submit', {
-        userName: this.userName,
+        email: this.userName,
         password: this.password
       })
     }

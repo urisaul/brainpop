@@ -1,12 +1,10 @@
 <template>
   <div class="start_container">
     <BackgroundWave />
-    <Navigator
-      :items="[
-        { text: name, to: `/feature/quiz` },
-        { text: 'Quiz', to: '' }
-      ]"
-    />
+    <Navigator :items="[
+      { text: name, to: `/feature/quiz` },
+      { text: 'Quiz', to: '' }
+    ]" />
     <main class="start_content">
       <h1>Quiz</h1>
       <h2 class="capitalize">{{ name }}</h2>

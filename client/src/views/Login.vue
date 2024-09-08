@@ -18,9 +18,14 @@ export default {
     submit(credentials) {
       console.log('credentials', credentials)
       const store = useUserStore()
-      store.login(() => {
-        this.$router.push({ name: 'home' })
-      })
+      store.login(credentials.email, credentials.password, (success) => {
+        if (success) {
+          this.$router.push({ name: 'home' });
+        } else {
+          // Handle login failure
+          console.error('Login failed');
+        }
+      });
     }
   }
 }
@@ -34,6 +39,7 @@ export default {
   background: #f5f5f5;
   height: 100vh;
 }
+
 .login_content {
   display: flex;
   align-items: center;

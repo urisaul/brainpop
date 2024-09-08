@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'password' => 1234,
+            'password' => '1234',
         ]);
 
         $quiz = \App\Models\Quiz::factory()->create([

@@ -44,7 +44,7 @@ router.beforeEach(to => {
     return '/'
   }
 
-  // REDIRECT TO LOGIN IF NOT LOGGED IN AND PAGE AUTH REQUIRED
+  // REDIRECT TO LOGIN IF NOT LOGGED IN AND PAGE REQUIRES AUTH
   if (to.meta?.requiresAuth && !isLoggedIn()) {
     return '/login'
   }
