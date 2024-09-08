@@ -14,10 +14,19 @@ class Quiz extends Model
         'name',
     ];
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     // relationships
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function userActivities()
+    {
+        return $this->hasMany(UserActivity::class);
     }
 }

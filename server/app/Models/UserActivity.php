@@ -5,21 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class UserActivity extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'question_text',
-        'answers',
-        'correct_answer',
-    ];
-
-    protected $hidden = [
+        'user_id',
         'quiz_id',
-        'correct_answer',
-        'created_at',
-        'updated_at',
+        'answers',
     ];
 
     protected $casts = [
@@ -29,5 +22,10 @@ class Question extends Model
     public function quiz()
     {
         return $this->belongsTo(Quiz::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -2,9 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
-use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\UserActivityController;
 use App\Http\Controllers\Auth\TokenController;
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +18,16 @@ use Illuminate\Http\Request;
 
 Route::post('login', [TokenController::class, 'login']);
 
-// get quiz questions
-Route::get('/quiz', function (Request $request) {
-    return \App\Models\Quiz::get();
+// auth middleware
+Route::middleware('auth:sanctum')->group(function () {
+
+    // get quiz questions
+    Route::get('/quiz/{quiz}', [QuizController::class, 'get']);
+    
+    // store users anserws
+    Route::post('/activity/{quiz}', [UserActivityController::class, 'save']);
+    
+    // get users anserws
+    Route::get('/activity/{quiz}', [UserActivityController::class, 'get']);
+
 });
-
-// store users anserws
-Route::post('/activity', [ActivityController::class, 'save']);
-
-// get users anserws
-Route::get('/activity', [ActivityController::class, 'get']);
