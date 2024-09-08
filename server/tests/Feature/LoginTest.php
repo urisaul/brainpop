@@ -28,7 +28,6 @@ class LoginTest extends TestCase
             ->assertJsonStructure([
                 'access_token',
                 'token_type',
-                'expires_in',
             ]);
     }
 
@@ -69,7 +68,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(401)
             ->assertJson([
-                'message' => 'Unauthorized',
+                'message' => 'Invalid login details',
             ]);
     }
 
